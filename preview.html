@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Bean skins</title>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
+<style>html,body{margin:0;height:100%;background:#9a4dff;overflow:hidden}</style></head>
+<body><canvas id="c" style="width:100%;height:100%;display:block"></canvas>
+<script type="module">
+import * as THREE from 'three';
+import { makeBean } from './js/client/actors.js';
+import { PATTERNS } from './js/client/skins.js';
+const r = new THREE.WebGLRenderer({ canvas: c, antialias: true }); r.setPixelRatio(2); r.setSize(innerWidth, innerHeight, false); r.toneMapping = THREE.ACESFilmicToneMapping; r.outputColorSpace = THREE.SRGBColorSpace;
+const sc = new THREE.Scene(); sc.background = new THREE.Color(0xb47bff);
+sc.add(new THREE.HemisphereLight(0xffffff, 0xffb3d6, 1.1)); const d = new THREE.DirectionalLight(0xffffff, 2.2); d.position.set(3, 6, 5); sc.add(d);
+const cam = new THREE.PerspectiveCamera(28, innerWidth / innerHeight, 0.1, 100); cam.position.set(0, 1.4, 8.4); cam.lookAt(0, 0.7, 0);
+const cols = ['#ff4d5e', '#3d8bff', '#57d96b', '#ffd23f', '#a066ff', '#ff7fc8', '#2ee6c5', '#ff8a3d'], em = ['😎', '🤪', '😀', '🤠', '👽', '😺', '🥸', '🤩'];
+PATTERNS.forEach((p, i) => { const b = makeBean(cols[i], 1.25, { pattern: p, main: cols[i], accent: i % 2 ? '#ffffff' : '#2a1846', emoji: em[i] }); b.position.x = (i - 3.5) * 0.95; b.rotation.y = -0.2 + (i - 3.5) * -0.05; sc.add(b); });
+r.render(sc, cam);
+</script></body></html>
