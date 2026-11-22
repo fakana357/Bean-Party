@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: bean-party
+    runtime: node
+    plan: free
+    buildCommand: npm install --no-save deno@2.9.6
+    startCommand: npx deno run -A server/main.ts
+    healthCheckPath: /
+    autoDeploy: true
